@@ -25,14 +25,19 @@ public class GameManager : MonoBehaviour
 
     private const string AllTimeBestKey = "BalBox_AllTimeBestHeight";
     private float idleTimer = 0f;
-
+    void Start()
+{
+    if (SceneManager.sceneCount == 1)
+    {
+        SceneManager.LoadScene(1, LoadSceneMode.Additive);
+    }
+}
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         AllTimeBest = PlayerPrefs.GetFloat(AllTimeBestKey, 0f);
     }
-
     void Update()
     {
         if (currentState == GameState.Start)
@@ -67,6 +72,7 @@ public class GameManager : MonoBehaviour
         RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Flat;
         RenderSettings.ambientLight = new Color(0.8f, 0.8f, 0.8f); 
         DynamicGI.UpdateEnvironment();
+
     }
 
     public void TriggerWin()
